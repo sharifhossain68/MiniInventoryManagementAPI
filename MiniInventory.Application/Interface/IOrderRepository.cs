@@ -1,0 +1,17 @@
+﻿using MiniInventory.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MiniInventory.Application.Interface
+{
+    public interface IOrderRepository
+    {
+        Task CreateOrder(Order order);
+        Task<Order?> GetOrderById(int id);
+        Task SavSaveChanges();
+    }
+     
+}
