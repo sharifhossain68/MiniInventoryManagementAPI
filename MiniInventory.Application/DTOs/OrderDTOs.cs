@@ -9,7 +9,7 @@ namespace MiniInventory.Application.DTOs
 {
     public class OrderDTOs
     {
-        public record OrderDTO(int OrderId,string CustomerName, DateTime OrderDate, decimal TotalAmount, OrderStatus Status);
-        public record CreateOrderDTO(int OrderId,string CustomerName, DateTime OrderDate, decimal TotalAmount, OrderStatus Status);
+        public record OrderDTO(int OrderId,string CustomerName, DateTime OrderDate, decimal TotalAmount);
+        public record CreateOrderDTO(int OrderId,string CustomerName, DateTime OrderDate, decimal TotalAmount);
     }
 }

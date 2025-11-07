@@ -17,12 +17,9 @@ namespace MiniInventory.Application.AutoMapper
 
 
             CreateMap<Product, ProductDTO>().ReverseMap();
-            CreateMap<Order, OrderDTO>()
-                .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()));
+            CreateMap<Order, OrderDTO>().ReverseMap();
 
-            //CreateMap<OrderItem, OrderItemDetailDto>()
-            //    .ForMember(d => d.ProductName, o => o.Ignore())
-            //    .ForMember(d => d.UnitPrice, o => o.MapFrom(s => s.UnitPrice));
+            
         }
     }
 }

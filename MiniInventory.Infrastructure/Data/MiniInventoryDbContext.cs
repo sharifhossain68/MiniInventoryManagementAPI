@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MiniInventory.Domain.Entities.Order;
 
 namespace MiniInventory.Infrastructure.Data
 {
@@ -19,6 +20,7 @@ namespace MiniInventory.Infrastructure.Data
 
         public DbSet<Product> Products  =>Set<Product>();
         public DbSet<Order>  Orders  =>Set<Order>();
+        public DbSet<OrderItem> OrderItems => Set<OrderItem>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

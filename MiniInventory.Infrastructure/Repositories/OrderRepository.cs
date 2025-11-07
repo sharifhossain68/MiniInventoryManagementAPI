@@ -17,14 +17,33 @@ namespace MiniInventory.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task CreateOrder(Order order)
+        public async Task<int> CreateOrder(Order order)
         {
-            await _context.Orders.AddAsync(order);
+            var i = 0;
+            try
+            { 
+              await   _context.Orders.AddAsync(order);
+            }
+            catch(Exception  ex )
+            {
+               throw new Exception( ex.Message);
+            }
+           
+            return i;
+         
             
         }
         public async Task<IEnumerable<Order>?> GetOrderByCustomerName(string customerName)
         {
-            return await _context.Orders.AsNoTracking().ToListAsync();
+            try
+            {
+                return await _context.Orders.AsNoTracking().ToListAsync();
+            }
+     
+              catch(Exception  ex )
+            {
+                throw new Exception(ex.Message);
+            }
             //return await _context.Orders.FirstOrDefaultAsync(f => f.OrderId == id);
 
 

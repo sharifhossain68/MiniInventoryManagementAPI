@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiniInventory.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using MiniInventory.Infrastructure.Data;
 namespace MiniInventory.Infrastructure.Migrations
 {
     [DbContext(typeof(MiniInventoryDbContext))]
-    partial class MiniInventoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251107165255_addorderitemstable")]
+    partial class addorderitemstable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

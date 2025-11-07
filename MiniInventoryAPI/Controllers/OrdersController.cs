@@ -18,7 +18,7 @@ namespace MiniInventoryAPI.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(CreateOrderDTO  createOrderDTO)
+        public async Task<IActionResult> Create(CreateOrderDTO createOrderDTO)
         {
             var createOrder = await _orderService.CreateOrderAsync(createOrderDTO);
             return CreatedAtAction(nameof(Get), new { id = createOrder.OrderId }, createOrder);

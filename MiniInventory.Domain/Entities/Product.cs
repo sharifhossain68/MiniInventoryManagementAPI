@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,12 @@ namespace MiniInventory.Domain.Entities
     public  sealed class Product
     {
         public int ProductId { get; set; }
+        [Required( ErrorMessage ="Product name is required!")] 
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
+        [Range(1,int.MaxValue, ErrorMessage = "Product price at least 1 ")]
         public decimal Price { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Product stock quantity at least 1")]
         public int StockQuantity { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
