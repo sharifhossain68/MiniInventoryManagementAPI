@@ -29,9 +29,9 @@ namespace MiniInventory.Application.Service
             await _orderRepository.SavSaveChanges();
             return _mapper.Map<CreateOrderDTO>(order);
         }
-        public async Task<CreateOrderDTO?> GetOrderByIdAsync(int id)
+        public async Task<CreateOrderDTO?> GetOrderByCustomerAsync(string customerName)
         {
-            var order = await _orderRepository.GetOrderById(id);
+            var order = await _orderRepository.GetOrderByCustomerName(customerName);
             return order == null ? null : _mapper.Map<CreateOrderDTO>(order);
 
         }

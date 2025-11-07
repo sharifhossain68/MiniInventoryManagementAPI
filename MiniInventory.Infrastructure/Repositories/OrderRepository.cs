@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MiniInventory.Infrastructure.Repositories
 {
-    internal class OrderRepository :IOrderRepository
+    public class OrderRepository :IOrderRepository
     {
         private readonly MiniInventoryDbContext _context;
         public OrderRepository(MiniInventoryDbContext context)
@@ -22,9 +22,11 @@ namespace MiniInventory.Infrastructure.Repositories
             await _context.Orders.AddAsync(order);
             
         }
-        public async Task<Order?> GetOrderById(int id)
+        public async Task<IEnumerable<Order>?> GetOrderByCustomerName(string customerName)
         {
-           return await _context.Orders.FirstOrDefaultAsync(f => f.OrderId == id);
+            return await _context.Orders.AsNoTracking().ToListAsync();
+            //return await _context.Orders.FirstOrDefaultAsync(f => f.OrderId == id);
+
 
         }
         public async Task SavSaveChanges()

@@ -42,7 +42,7 @@ namespace MiniInventory.Infrastructure.Repositories
         {
             _dbContext.Remove(product);
         }
-       
+        
 
         public async Task SavSaveChanges()
         {

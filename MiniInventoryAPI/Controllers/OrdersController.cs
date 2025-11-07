@@ -25,9 +25,9 @@ namespace MiniInventoryAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(string customerName)
         {
-            var orderDTO = await _orderService.GetOrderByIdAsync(id);
+            var orderDTO = await _orderService.GetOrderByCustomerAsync(customerName);
             return orderDTO == null ? NotFound() : Ok(orderDTO);
         }
     }

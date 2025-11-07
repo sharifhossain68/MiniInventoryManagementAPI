@@ -25,14 +25,22 @@ var connectionString = builder.Configuration.GetConnectionString("MiniInventoryC
 builder.Services.AddDbContext<MiniInventoryDbContext>(options =>
     options.UseSqlServer(connectionString));
 // Repositories
-//builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 
 // Application services
+builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ProductService>();
 //builder.Services.AddScoped<OrderService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy => policy.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+});
 
 //builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
@@ -44,6 +52,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

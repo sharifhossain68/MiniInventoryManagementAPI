@@ -10,7 +10,7 @@ namespace MiniInventory.Application.Interface
     public interface IOrderRepository
     {
         Task CreateOrder(Order order);
-        Task<Order?> GetOrderById(int id);
+        Task<IEnumerable<Order>?> GetOrderByCustomerName(string customerName);
         Task SavSaveChanges();
     }
      

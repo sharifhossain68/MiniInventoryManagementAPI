@@ -17,30 +17,31 @@ namespace MiniInventory.Domain.Entities
         public DateTime OrderDate { get;  set; }
         public decimal TotalAmount { get;  set; }
         public OrderStatus Status { get;  set; }
-        public List<OrderItem> Items { get; set; } = new();
+        //public List<OrderItem> Items { get; set; } = new();
         public Order( string customerName, DateTime orderDate, decimal totalAmount, OrderStatus status) 
-        { 
+        {
+          OrderId = 0;
           CustomerName = customerName;
           OrderDate = orderDate;
           TotalAmount = totalAmount;
           Status = status;
         }
-        public  class OrderItem
-        {
-            public int OrderItemId { get;  set; }
-            public int ProductId { get;  set; }
-            public int Quantity { get;  set; }
-            public decimal UnitPrice { get;  set; }
+        //public  class OrderItem
+        //{
+        //    public int OrderItemId { get;  set; }
+        //    public int ProductId { get;  set; }
+        //    public int Quantity { get;  set; }
+        //    public decimal UnitPrice { get;  set; }
       
-            private OrderItem() { }
+        //    private OrderItem() { }
 
-            public OrderItem(int productId, int quantity, decimal unitPrice)
-            {
-                if (quantity <= 0) throw new ArgumentOutOfRangeException(nameof(quantity), "Product  quantity must be grater than zero!"); ;
-                ProductId = productId;
-                Quantity = quantity;
-                UnitPrice = unitPrice;
-            }
-        }
+        //    public OrderItem(int productId, int quantity, decimal unitPrice)
+        //    {
+        //        if (quantity <= 0) throw new ArgumentOutOfRangeException(nameof(quantity), "Product  quantity must be grater than zero!"); ;
+        //        ProductId = productId;
+        //        Quantity = quantity;
+        //        UnitPrice = unitPrice;
+        //    }
+        //}
     }
 }
