@@ -32,7 +32,7 @@ namespace MiniInventoryAPI.Controllers
             public async Task<IActionResult> Create(CreateProductDTO createProductDTO)
             {
                 var createdProduct = await _service.CreateProductAsync(createProductDTO);
-                return CreatedAtAction(nameof(Get), new { id = createdProduct.ProductId }, createdProduct);
+                return CreatedAtAction(nameof(GetAll), new { id = createdProduct.ProductId }, createdProduct);
             }
             //[HttpPut("Update")] 
 

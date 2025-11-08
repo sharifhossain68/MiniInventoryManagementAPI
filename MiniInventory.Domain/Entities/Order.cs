@@ -8,10 +8,7 @@ using System.Threading.Tasks;
 
 namespace MiniInventory.Domain.Entities
 {
-    public enum OrderStatus
-    {
-      Pending , Completed, Cancelled   
-    }
+   
     public class Order
     {
         
@@ -20,14 +17,15 @@ namespace MiniInventory.Domain.Entities
         public DateTime OrderDate { get;  set; }
         public decimal TotalAmount { get;  set; }
         public int Status { get;  set; }
-        public List<OrderItem> Items { get; set; } = new();
-        public Order(string customerName, DateTime orderDate, decimal totalAmount)
+        //public List<OrderItem> Items { get; set; } = new();
+        public Order(string customerName, decimal totalAmount)
         {
             OrderId = 0;
             CustomerName = customerName;
             OrderDate = DateTime.UtcNow;
             TotalAmount = totalAmount;
             Status = 0;
+            
         }
         public class OrderItem
         {

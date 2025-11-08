@@ -17,9 +17,10 @@ namespace MiniInventory.Application.AutoMapper
 
 
             CreateMap<Product, ProductDTO>().ReverseMap();
-            CreateMap<Order, OrderDTO>().ReverseMap();
 
             
+
+
         }
     }
 }

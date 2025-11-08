@@ -2,56 +2,89 @@
 using MiniInventory.Application.Interface;
 using MiniInventory.Domain.Entities;
 using MiniInventory.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using static MiniInventory.Domain.Entities.Order;
 
 namespace MiniInventory.Infrastructure.Repositories
 {
-    public class OrderRepository :IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly MiniInventoryDbContext _context;
+
         public OrderRepository(MiniInventoryDbContext context)
         {
             _context = context;
         }
-        public async Task<int> CreateOrder(Order order)
+        
+        public async  Task<Order> CreateOrder(Order order)
         {
-            var i = 0;
+            // Declare OrderId variable
+
             try
-            { 
-              await   _context.Orders.AddAsync(order);
-            }
-            catch(Exception  ex )
             {
-               throw new Exception( ex.Message);
+                //Add the order first
+                await _context.Orders.AddAsync(order);
+                 await _context.SaveChangesAsync();
+                
+                // Get the generated OrderId
+                return order;
+             
             }
-           
-            return i;
-         
+            catch (Exception ex)
+            {
+                // Roll back transaction if something failed
+               
+                throw new Exception($"Error creating order: {ex.Message}");
+            }
+
             
         }
-        public async Task<IEnumerable<Order>?> GetOrderByCustomerName(string customerName)
+      
+        public async Task<IEnumerable<Order>> GetAllOrder()
         {
             try
             {
-                return await _context.Orders.AsNoTracking().ToListAsync();
+                return await _context.Orders
+                    .ToListAsync();
             }
-     
-              catch(Exception  ex )
+            catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error retrieving orders: {ex.Message}");
             }
-            //return await _context.Orders.FirstOrDefaultAsync(f => f.OrderId == id);
+        }
+        public async Task CreateOrderItems(List<OrderItem> orderItems,int orderId)
+        {
 
+            // Assign the OrderId to each item 
+            foreach (var item in orderItems)
+            {
+                item.OrderId = orderId;
+            }
 
+            await _context.OrderItems.AddRangeAsync(orderItems);
+            await _context.SaveChangesAsync();
+        }
+        public async Task  ReduceProduct(List<OrderItem> orderItems)
+        {
+            foreach (var item in orderItems)
+            {
+              
+
+                var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == item.ProductId);
+                if (product != null)
+                {
+                    // update product stock
+                    product.StockQuantity -= item.Quantity;
+                    _context.Products.Update(product);
+                    _context.SaveChanges();
+                }
+            }
         }
         public async Task SavSaveChanges()
         {
             await _context.SaveChangesAsync();
         }
 
+      
     }
 }

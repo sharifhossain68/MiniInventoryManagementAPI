@@ -22,18 +22,23 @@ namespace MiniInventory.Application.Service
             _mapper = mapper;
 
         }
-        public async Task<CreateOrderDTO> CreateOrderAsync(CreateOrderDTO createOrderDTO)
+        public async Task<IEnumerable<Order>> GetAllOrderAsync()
         {
-            var order = new Order(createOrderDTO.CustomerName, createOrderDTO.OrderDate, createOrderDTO.TotalAmount);
-            var i =  _orderRepository.CreateOrder(order);
-            await _orderRepository.SavSaveChanges();
-            return _mapper.Map<CreateOrderDTO>(order);
-        }
-        public async Task<CreateOrderDTO?> GetOrderByCustomerAsync(string customerName)
-        {
-            var order = await _orderRepository.GetOrderByCustomerName(customerName);
-            return order == null ? null : _mapper.Map<CreateOrderDTO>(order);
+            return await _orderRepository.GetAllOrder();
+            //return  _mapper.Map<OrderDTO>(order);
 
         }
+        public async Task<int> CreateOrderAsync(CreateOrderDTO createOrderDTO)
+        {
+            var order = new Order(createOrderDTO.CustomerName, createOrderDTO.TotalAmount);
+            var ord =  await _orderRepository.CreateOrder(order);
+
+
+            await _orderRepository.CreateOrderItems(createOrderDTO.Items, ord.OrderId);
+            await _orderRepository.ReduceProduct(createOrderDTO.Items);
+             return ord.OrderId;
+            //return _mapper.Map<CreateOrderDTO>(order);
+        }
+      
     }
 }

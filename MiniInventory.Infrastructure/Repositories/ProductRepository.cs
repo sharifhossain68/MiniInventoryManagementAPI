@@ -24,7 +24,14 @@ namespace MiniInventory.Infrastructure.Repositories
         }
         public async Task AddProduct(Product product)
         {
-           await  _dbContext.Products.AddAsync(product);
+            try
+            {
+                await _dbContext.Products.AddAsync(product);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error delete: {ex.Message}");
+            }
         }
         public async Task<Product?> GetByIdProduct(int id)
         {
@@ -35,12 +42,26 @@ namespace MiniInventory.Infrastructure.Repositories
             return await _dbContext.Products.FirstOrDefaultAsync(p => p.ProductId == id);
         }
        public void UpdateProduct(Product product)
-        { 
-            _dbContext.Update(product);
+        {
+            try
+            {
+                _dbContext.Update(product);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error update: {ex.Message}");
+            }
         }
         public void RemoveProduct(Product product)
         {
-            _dbContext.Remove(product);
+            try
+            {
+                _dbContext.Remove(product);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error delete: {ex.Message}");
+            }
         }
         
 
