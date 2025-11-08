@@ -15,8 +15,11 @@ namespace MiniInventory.Application.Interface
         Task CreateOrderItems(List<OrderItem> orderItems, int orderId);
         Task ReduceProduct(List<OrderItem> orderItems);
 
-        Task SavSaveChanges();
- 
+        Task<IEnumerable<OrderItem>> GetByIdOrderItem(int orderId);
+        void updateStatus(int status, int orderId);
+        Task SaveChange();
+
+
     }
      
 }

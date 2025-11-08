@@ -80,7 +80,21 @@ namespace MiniInventory.Infrastructure.Repositories
                 }
             }
         }
-        public async Task SavSaveChanges()
+        public async Task<IEnumerable<OrderItem>> GetByIdOrderItem(int orderId)
+        {
+            return await _context.OrderItems.Where(o => o.OrderId == orderId).ToListAsync();
+        }
+        public  void updateStatus(int status,int orderId)
+        {
+            var  data = _context.Orders.Where(o => o.OrderId == orderId).FirstOrDefault()!;
+
+            data.Status = status;
+            _context.Update(data);
+            _context.SaveChangesAsync();
+
+
+        }
+        public async Task SaveChange()
         {
             await _context.SaveChangesAsync();
         }

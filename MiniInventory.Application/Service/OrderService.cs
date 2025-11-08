@@ -39,6 +39,11 @@ namespace MiniInventory.Application.Service
              return ord.OrderId;
             //return _mapper.Map<CreateOrderDTO>(order);
         }
-      
+        public async Task<IEnumerable<OrderItem>> GetByIdOrderItemsAsync(int orderId)
+        {
+            return await _orderRepository.GetByIdOrderItem(orderId);
+        }
+
+
     }
 }

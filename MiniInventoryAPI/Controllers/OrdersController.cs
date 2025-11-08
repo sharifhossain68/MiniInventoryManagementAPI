@@ -28,7 +28,12 @@ namespace MiniInventoryAPI.Controllers
             var createOrder = await _orderService.CreateOrderAsync(createOrderDTO);
             return CreatedAtAction(nameof(GetAll), createOrder);
         }
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetAllOrderItems(int orderId)
+        {
+            return Ok(await _orderService.GetAllOrderAsync());
 
-     
+        }
+
     }
 }
