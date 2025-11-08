@@ -17,6 +17,7 @@ namespace MiniInventory.Application.Interface
 
         Task<IEnumerable<OrderItem>> GetByIdOrderItem(int orderId);
         void updateStatus(int status, int orderId);
+        Task IncreaseProduct(Task<IEnumerable<OrderItem>> orderItems);
         Task SaveChange();
 
 

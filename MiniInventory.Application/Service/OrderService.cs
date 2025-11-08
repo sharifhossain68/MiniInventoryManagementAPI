@@ -43,6 +43,21 @@ namespace MiniInventory.Application.Service
         {
             return await _orderRepository.GetByIdOrderItem(orderId);
         }
+        public async Task<bool> UpdateOrderAsync(int id,int statusId)
+        {
+
+             _orderRepository.updateStatus(statusId,id);
+            if (statusId == 2)
+            {
+              var items =  _orderRepository.GetByIdOrderItem(id);
+              await  _orderRepository.IncreaseProduct(items);
+                
+                
+            }
+           await  _orderRepository.SaveChange();
+            return true;
+        }
+     
 
 
     }

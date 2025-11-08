@@ -86,14 +86,38 @@ namespace MiniInventory.Infrastructure.Repositories
         }
         public  void updateStatus(int status,int orderId)
         {
-            var  data = _context.Orders.Where(o => o.OrderId == orderId).FirstOrDefault()!;
+            try
+            {
+                var data = _context.Orders.Where(o => o.OrderId == orderId).FirstOrDefault()!;
 
-            data.Status = status;
-            _context.Update(data);
-            _context.SaveChangesAsync();
+                data.Status = status;
+                _context.Update(data);
+            }
+            catch (Exception ex)
+            {
+                new Exception(ex.Message);
+            }
 
 
         }
+        public async Task IncreaseProduct(Task<IEnumerable<OrderItem>> orderItems)
+        {
+
+            foreach (var item in orderItems.GetAwaiter().GetResult())
+            {
+
+
+                var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == item.ProductId);
+                if (product != null)
+                {
+                    // update product stock
+                    product.StockQuantity += item.Quantity;
+                    _context.Products.Update(product);
+                    _context.SaveChanges();
+                }
+            }
+        }
+
         public async Task SaveChange()
         {
             await _context.SaveChangesAsync();

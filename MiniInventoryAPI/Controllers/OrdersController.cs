@@ -22,18 +22,28 @@ namespace MiniInventoryAPI.Controllers
             return Ok( await _orderService.GetAllOrderAsync());
             
         }
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            return Ok(await _orderService.GetByIdOrderItemsAsync(id));
+
+        }
         [HttpPost()]
         public async Task<IActionResult> Create(CreateOrderDTO createOrderDTO)
         {
             var createOrder = await _orderService.CreateOrderAsync(createOrderDTO);
             return CreatedAtAction(nameof(GetAll), createOrder);
         }
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetAllOrderItems(int orderId)
-        {
-            return Ok(await _orderService.GetAllOrderAsync());
 
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id,int statusId)
+
+        {
+
+            var ok = await _orderService.UpdateOrderAsync(id,statusId);
+            return ok ? NoContent() : NotFound();
         }
+
 
     }
 }
