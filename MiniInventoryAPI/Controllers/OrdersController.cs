@@ -39,8 +39,16 @@ namespace MiniInventoryAPI.Controllers
         public async Task<IActionResult> Update(int id,int statusId)
 
         {
+            statusId = 1;
 
             var ok = await _orderService.UpdateOrderAsync(id,statusId);
+            return ok ? NoContent() : NotFound();
+        }
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var statusId = 2;
+            var ok = await _orderService.UpdateOrderAsync(id, statusId);
             return ok ? NoContent() : NotFound();
         }
 
