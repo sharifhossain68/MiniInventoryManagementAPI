@@ -18,12 +18,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-//builder.Services.AddDbContext<MiniInventoryDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("MiniInventoryConnection")));
+
 //Db Context
 var connectionString = builder.Configuration.GetConnectionString("MiniInventoryConnection");
 builder.Services.AddDbContext<MiniInventoryDbContext>(options =>
     options.UseSqlServer(connectionString));
+
 // Repositories
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -45,6 +45,11 @@ builder.Services.AddCors(options =>
 //builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MiniInventoryDbContext>();
+    db.Database.Migrate(); // Auto apply migrations and create DB
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
